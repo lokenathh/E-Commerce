@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+
+	<!-- <section class="d-flex align-items-center min-vh-100">
+		<div class="container">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-md-6 p-4">
+
+					<div class="container ">
+						<div class="form-container fw-bold">
+							<div class="form-header fw-bold">
+								<h2>Enter a delivery address</h2>
+								<p class="text-muted">Please fill out the form below</p>
+							</div>
+
+							<form>
+								<div class="mb-3 col">
+									<label class="form-label required-field">Name</label>
+									<div class="name-fields">
+										<input type="text" name="firstName" placeholder="First Name"
+											class="form-control"> <input type="text"
+											name="lastName" placeholder="Last Name" class="form-control">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="email" class="form-label required-field">Email
+										Address</label> <input type="email" name="Email" class="form-control"
+										id="email" placeholder="example@email.com">
+								</div>
+
+								<div class="form-group">
+									<label for="phone" class="form-label">Phone Number</label> <input
+										type="tel" class="form-control" id="phone" name="mobileNo"
+										placeholder="(123) 456-7890">
+								</div>
+
+								<div class="form-group">
+									<label for="text" class="form-label">Area, Street,
+										Sector, Village</label> <input type="tel" class="form-control"
+										id="phone" name="address">
+								</div>
+
+								<div class="form-group">
+									<label for="text" class="form-label">Town/City</label> <input
+										type="tel" class="form-control" id="phone" name="city">
+								</div>
+
+								<div class="form-group">
+									<label for="text" class="form-label">Pincode</label> <input
+										type="tel" class="form-control" id="phone" name="pincode">
+								</div>
+
+								<div class="form-group">
+									<label for="text" class="form-label">State</label> <input
+										type="tel" class="form-control" id="phone" name="state">
+								</div>
+
+
+								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+									<button type="reset" class="btn btn-outline-secondary me-md-2">Reset</button>
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-md-6 mt-5">
+					<div
+						class="card shadow-lg shadow p-3 mb-5 bg-body-tertiary rounded">
+						<div class="card-header bg-white">
+							<p class="fs-4 text-center m-0 fw-bold">Payment method</p>
+
+							<div class="card">
+								<div class="card-body">
+									<table class="table">
+										<tr>
+											<td><strong>Items:</strong></td>
+											<td>&#8377;34,532</td>
+										</tr>
+
+										<tr>
+											<td><strong>Delivery:</strong></td>
+											<td>&#8377;49.00</td>
+										</tr>
+
+										<tr>
+											<td><strong>Tax:</strong></td>
+											<td>&#8377;98.00</td>
+										</tr>
+
+										<tr>
+											<td><strong>Order Total:</strong></td>
+											<td>&#8377;34,532</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<select class="form-control">
+								<option>Cash On Delivery</option>
+								<option>Online Payment</option>
+							</select>
+
+						</div>
+						<div class="card-body">
+							<form action="/login" method="post">
+
+
+							<button type="submit" class="btn btn-primary w-100 ">Use
+								this payment method</button>
+							</form>
+						</div>
+
+
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section> -->
+
+
+	<section class="d-flex align-items-center min-vh-100 bg-light">
+		<div class="container">
+			<form action="/user/save-order" method="post" id="deliveryForm">
+				<div class="row justify-content-center align-items-center">
+
+					<div class="col-md-6 p-4">
+						<div class="container">
+							<div class="form-container fw-bold">
+								<div
+									class="form-header fw-bold card shadow-lg p-3 mb-5 bg-body-tertiary rounded animate__animated animate__fadeInDown">
+									<h2>
+										<i class="bi bi-geo-alt-fill me-2 text-primary"></i>Enter a
+										delivery address
+									</h2>
+									<p class="text-muted">Please fill out the form below</p>
+								</div>
+
+
+								<div class="mb-3 col">
+									<label class="form-label required-field">Name</label>
+									<div class="name-fields d-flex gap-2">
+										<div class="position-relative w-100">
+											<span
+												class="position-absolute top-50 translate-middle-y ms-3">
+												<i class="bi bi-person text-muted"></i>
+											</span> <input type="text" name="firstName" placeholder="First Name"
+												class="form-control form-control-hover ps-5" required>
+										</div>
+										<div class="position-relative w-100">
+											<input type="text" name="lastName" placeholder="Last Name"
+												class="form-control form-control-hover" required>
+										</div>
+									</div>
+									<!-- <div class="invalid-feedback d-none" id="nameError">Please
+										enter your full name</div> -->
+								</div>
+
+								<div class="form-group mb-3">
+									<label for="email" class="form-label required-field">Email
+										Address</label>
+									<div class="position-relative">
+										<span class="position-absolute top-50 translate-middle-y ms-3">
+											<i class="bi bi-envelope text-muted"></i>
+										</span> <input type="email" name="email"
+											class="form-control form-control-hover ps-5" id="email"
+											placeholder="example@email.com" required><small
+											class="form-text text-muted">We'll send delivery
+											updates to this Email</small>
+										<div class="invalid-feedback d-none" id="emailError">Please
+											enter a valid email address</div>
+									</div>
+								</div>
+
+								<div class="form-group mb-3">
+									<label for="phone" class="form-label">Phone Number</label>
+									<div class="position-relative">
+										<span class="position-absolute top-50 translate-middle-y ms-3">
+											<i class="bi bi-telephone text-muted"></i>
+										</span> <input type="tel"
+											class="form-control form-control-hover ps-5" id="phone"
+											name="mobileNo" placeholder="(123) 456-7890">
+									</div>
+								</div>
+
+								<div class="form-group mb-3">
+									<label for="address" class="form-label required-field">Area,
+										Street, Sector, Village</label>
+									<div class="position-relative">
+										<span class="position-absolute top-50 translate-middle-y ms-3">
+											<i class="bi bi-house text-muted"></i>
+										</span> <input type="text"
+											class="form-control form-control-hover ps-5" id="address"
+											name="address" required>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group mb-3">
+											<label for="city" class="form-label required-field">Town/City</label>
+											<div class="position-relative">
+												<span
+													class="position-absolute top-50 translate-middle-y ms-3">
+													<i class="bi bi-building text-muted"></i>
+												</span> <input type="text"
+													class="form-control form-control-hover ps-5" id="city"
+													name="city" required>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group mb-3">
+											<label for="pincode" class="form-label required-field">Pincode</label>
+											<div class="position-relative">
+												<span
+													class="position-absolute top-50 translate-middle-y ms-3">
+													<i class="bi bi-pin-map text-muted"></i>
+												</span> <input type="text"
+													class="form-control form-control-hover ps-5" id="pincode"
+													name="pincode" maxlength="6" required>
+												<div class="invalid-feedback d-none" id="pincodeError">Please
+													enter a valid 6-digit pincode</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group mb-3">
+									<label for="state" class="form-label required-field">State</label>
+									<div class="position-relative">
+										<span class="position-absolute top-50 translate-middle-y ms-3">
+											<i class="bi bi-geo text-muted"></i>
+										</span> <select class="form-control form-control-hover ps-5"
+											id="state" name="state" required>
+											<option value="">Select State</option>
+											<option value="Andhra Pradesh">Andhra Pradesh</option>
+											<option value="Karnataka">Karnataka</option>
+											<option value="Kerala">Kerala</option>
+											<option value="Kerala">West Bengal</option>
+											<option value="Maharashtra">Maharashtra</option>
+											<option value="Tamil Nadu">Tamil Nadu</option>
+											<option value="Telangana">Telangana</option>
+											<option value="Uttar Pradesh">Uttar Pradesh</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-check mb-4">
+									<input class="form-check-input" type="checkbox"
+										id="defaultAddress"> <label class="form-check-label"
+										for="defaultAddress">Set as default delivery address</label>
+								</div>
+
+								<!-- <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+									<button type="reset" class="btn btn-outline-secondary me-md-2">
+										<i class="bi bi-arrow-repeat me-1"></i> Reset
+									</button>
+									<button type="submit" class="btn btn-primary" id="submitBtn">
+										<span class="spinner-border spinner-border-sm d-none"
+											id="spinner" role="status" aria-hidden="true"></span> <span
+											id="submitText"><i class="bi bi-check-circle me-1"></i>
+											Submit</span>
+									</button>
+								</div> -->
+
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 mt-5">
+						<div
+							class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded animate__animated animate__fadeInRight">
+							<div class="card-header bg-white border-0">
+								<p class="fs-4 text-center m-0 fw-bold">
+									<i class="bi bi-credit-card-2-front me-2 text-primary"></i>Payment
+									method
+								</p>
+
+								<div class="card mt-3 border-0 shadow-sm">
+									<div class="card-body">
+										<p class="fw-bold mb-3">Order Summary</p>
+										<table class="table table-sm">
+											<tr>
+												<td><strong>Items:</strong></td>
+												<td class="text-end">&#8377;<span id="itemsPrice">[[${orderPrice}]]</span></td>
+											</tr>
+											<tr>
+												<td><strong>Delivery:</strong></td>
+												<td class="text-end">&#8377;<span id="deliveryFee">49.00</span></td>
+											</tr>
+											<tr>
+												<td><strong>Tax:</strong></td>
+												<td class="text-end">&#8377;<span id="taxAmount">99.00</span></td>
+											</tr>
+											<tr class="table-active fw-bold">
+												<td><strong>Order Total:</strong></td>
+												<td class="text-end">&#8377;<span id="orderTotal">[[${totalOrderPrice}]]</span></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+
+								<div class="payment-methods mt-4">
+									<p class="fw-bold mb-3">Select Payment Option</p>
+									<div
+										class="form-check border rounded p-3 mb-2 payment-option hover-highlight">
+										<input class="form-check-input" type="radio"
+											name="paymentType" id="cod" value="COD" checked> <label
+											class="form-check-label d-flex justify-content-between w-100"
+											for="cod"> <span><i
+												class="bi bi-cash text-success me-2"></i> Cash On
+												Delivery/Pay on Delivery</span> <span
+											class="badge bg-success rounded-pill">Recommended</span>
+										</label>
+									</div>
+
+									<div
+										class="form-check border rounded p-3 mb-2 payment-option hover-highlight">
+										<input class="form-check-input" type="radio"
+											name="paymentMethod" id="card"> <label
+											class="form-check-label d-flex justify-content-between w-100"
+											for="card"> <span><i
+												class="bi bi-credit-card text-primary me-2"></i> Credit or
+												debit card</span> <span class="text-muted small">Secure</span>
+										</label>
+									</div>
+
+									<div
+										class="form-check border rounded p-3 mb-2 payment-option hover-highlight">
+										<input class="form-check-input" type="radio"
+											name="paymentMethod" id="upi" value="ONLINE"> <label
+											class="form-check-label d-flex justify-content-between w-100"
+											for="upi"> <span><i
+												class="bi bi-phone text-info me-2"></i> Other UPI Apps</span> <span
+											class="text-muted small">Instant</span>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="card-body">
+								<button id="placeOrderBtn" type="submit"
+									class="btn btn-primary w-100 py-2 btn-lg">
+									<i class="bi bi-bag-check me-2"></i> Place Your Order
+								</button>
+								<div class="alert alert-success mt-3 d-none" id="orderSuccess">
+									<i class="bi bi-check-circle-fill me-2"></i> Order placed
+									successfully! Your order will be delivered soon.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+
+
+</body>
+</html>

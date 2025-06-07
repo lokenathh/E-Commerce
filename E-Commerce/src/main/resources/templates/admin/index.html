@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+		<div
+			class="container p-5 min-vh-100 d-flex flex-column justify-content-center align-items-center">
+			<div class="dashboard-header text-center mb-5 mt-4">
+				<h2 class="fw-bold display-5 position-relative d-inline-block">
+					<span class="position-relative"
+						style="background: linear-gradient(135deg, #2C3E50, #4A00E0); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Seller
+						Dashboard</span>
+					<div class="position-absolute w-100"
+						style="height: 6px; background: linear-gradient(90deg, #6a11cb, #2575fc); bottom: -12px; left: 0; border-radius: 8px;"></div>
+				</h2>
+				<p class="mt-3 mx-auto" style="max-width: 600px;">Manage your
+					products track your business performance & insights to grow your
+					sales</p>
+			</div>
+
+
+			<!-- <div class="dashboard-header text-center mb-5">
+				<h3 class="text-center mt-4 fw-bold animated-title">Seller
+					Dashboard</h3>
+				<div class="position-absolute w-100"
+					style="height: 6px; background: linear-gradient(90deg, #6a11cb, #2575fc); bottom: -12px; left: 0; border-radius: 8px;"></div>
+				<p class="text-muted fade-in-text">Manage your products and
+					track your business performance</p>
+
+			</div> -->
+
+			<div class="row g-4 justify-content-center custom-card-grid">
+				<div class="col-12 col-md-6 col-lg-4">
+					<a href="/admin/loadAddProduct" class="text-decoration-none">
+						<div
+							class="card shadow p-3 mb-5 border-0 text-center bg-white admin-color super-interactive-card">
+							<div class="floating-particles">
+								<span class="particle"></span> <span class="particle"></span> <span
+									class="particle"></span>
+							</div>
+							<div class="card-shine"></div>
+							<div class="card-body text-warning">
+								<div class="icon-container mb-3 floating-icon">
+									<i class="fa-solid fa-square-plus fa-3x"></i>
+									<div class="icon-ripple"></div>
+								</div>
+								<h5 class="fw-semibold card-title-interactive">Add Product</h5>
+								<p class="card-subtitle">Create new product listings</p>
+								<div class="action-button">
+									<span>Click to Add</span> <i
+										class="fas fa-arrow-right button-arrow"></i>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-4">
+					<a href="/admin/category" class="text-decoration-none">
+						<div
+							class="card shadow p-3 mb-5 border-0 text-center admin-color super-interactive-card">
+							<div class="floating-particles">
+								<span class="particle"></span> <span class="particle"></span> <span
+									class="particle"></span>
+							</div>
+							<div class="card-shine"></div>
+							<div class="card-body text-warning">
+								<div class="icon-container mb-3 floating-icon">
+									<i class="fa-solid fa-list fa-3x"></i>
+									<div class="icon-ripple"></div>
+								</div>
+								<h5 class="fw-semibold card-title-interactive">Add Category</h5>
+								<p class="card-subtitle">Organize product categories</p>
+								<div class="action-button">
+									<span>Organize Now</span> <i
+										class="fas fa-arrow-right button-arrow"></i>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-4">
+					<a href="/admin/products" class="text-decoration-none">
+						<div
+							class="card shadow p-3 mb-5 border-0 text-center admin-color super-interactive-card">
+							<div class="floating-particles">
+								<span class="particle"></span> <span class="particle"></span> <span
+									class="particle"></span>
+							</div>
+							<div class="card-shine"></div>
+							<div class="card-body text-warning">
+								<div class="icon-container mb-3 floating-icon">
+									<i class="fa-solid fa-book-open fa-3x"></i>
+									<div class="icon-ripple"></div>
+								</div>
+								<h5 class="fw-semibold card-title-interactive">View Product</h5>
+								<p class="card-subtitle">Browse your inventory</p>
+								<div class="action-button">
+									<span>View All</span> <i
+										class="fas fa-arrow-right button-arrow"></i>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-12 col-md-6 col-lg-4">
+					<a href="/admin/orders" class="text-decoration-none">
+						<div
+							class="card shadow p-3 mb-5 border-0 text-center admin-color super-interactive-card">
+							<div class="floating-particles">
+								<span class="particle"></span> <span class="particle"></span> <span
+									class="particle"></span>
+							</div>
+							<div class="card-shine"></div>
+							<div class="card-body text-warning">
+								<div class="icon-container mb-3 floating-icon">
+									<i class="fa-solid fa-box fa-3x"></i>
+									<div class="icon-ripple"></div>
+								</div>
+								<h5 class="fw-semibold card-title-interactive">Orders</h5>
+								<p class="card-subtitle">Manage customer orders</p>
+								<div class="action-button">
+									<span>Manage Orders</span> <i
+										class="fas fa-arrow-right button-arrow"></i>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<style>
+/* Animated Title */
+.animated-title {
+	color: #333;
+	font-size: 2.5rem;
+	margin-bottom: 0.5rem;
+}
+
+/* Interactive Summary Cards */
+.interactive-card {
+	background: white;
+	border-radius: 15px;
+	padding: 1.5rem;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	height: 100%;
+	border-left: 4px solid #ffc107;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+.card-glow {
+	position: absolute;
+	top: -2px;
+	left: -2px;
+	right: -2px;
+	bottom: -2px;
+	background: linear-gradient(45deg, #ffc107, transparent, #ffc107);
+	border-radius: 15px;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	z-index: -1;
+}
+
+.interactive-card:hover .card-glow {
+	opacity: 0.3;
+	animation: rotate 2s linear infinite;
+}
+
+.interactive-card:hover {
+	transform: translateY(-10px) scale(1.02);
+	box-shadow: 0 15px 35px rgba(255, 193, 7, 0.2);
+}
+
+.pulse-icon {
+	color: #ffc107;
+	font-size: 2rem;
+	margin-bottom: 1rem;
+	animation: iconPulse 3s ease-in-out infinite;
+}
+
+.trend-indicator {
+	font-size: 0.8rem;
+	font-weight: 600;
+	padding: 0.3rem 0.6rem;
+	border-radius: 12px;
+	margin-top: 0.5rem;
+	display: inline-block;
+}
+
+.trend-indicator.up {
+	background: rgba(40, 167, 69, 0.1);
+	color: #28a745;
+}
+
+.trend-indicator.neutral {
+	background: rgba(108, 117, 125, 0.1);
+	color: #6c757d;
+}
+
+/* Super Interactive Main Cards */
+.super-interactive-card {
+	border-radius: 20px;
+	transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+	overflow: hidden;
+	position: relative;
+	transform-style: preserve-3d;
+	perspective: 1000px;
+}
+
+.floating-particles {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.particle {
+	position: absolute;
+	width: 4px;
+	height: 4px;
+	background: #ffc107;
+	border-radius: 50%;
+	opacity: 0;
+	animation: float 6s ease-in-out infinite;
+}
+
+.particle:nth-child(1) {
+	left: 20%;
+	animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+	left: 50%;
+	animation-delay: 2s;
+}
+
+.particle:nth-child(3) {
+	left: 80%;
+	animation-delay: 4s;
+}
+
+.card-shine {
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.2),
+		transparent);
+	transition: left 0.5s ease;
+}
+
+.super-interactive-card:hover .card-shine {
+	left: 100%;
+}
+
+.super-interactive-card:hover {
+	transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+	box-shadow: 0 25px 50px rgba(255, 193, 7, 0.3);
+}
+
+.floating-icon {
+	background: rgba(255, 193, 7, 0.1);
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+	transition: all 0.4s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.icon-ripple {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	background: rgba(255, 193, 7, 0.3);
+	transform: translate(-50%, -50%);
+	transition: all 0.4s ease;
+}
+
+.super-interactive-card:hover .floating-icon {
+	background: rgba(255, 193, 7, 0.2);
+	transform: scale(1.1) rotateY(180deg);
+}
+
+.super-interactive-card:hover .icon-ripple {
+	width: 100px;
+	height: 100px;
+}
+
+.card-title-interactive {
+	transition: all 0.3s ease;
+}
+
+.super-interactive-card:hover .card-title-interactive {
+	color: #ffc107 !important;
+	transform: scale(1.05);
+}
+
+.action-button {
+	margin-top: 1rem;
+	padding: 0.75rem 1.5rem;
+	background: rgba(255, 193, 7, 0.1);
+	border-radius: 25px;
+	color: #ffc107;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.button-arrow {
+	transition: transform 0.3s ease;
+}
+
+.super-interactive-card:hover .action-button {
+	background: #ffc107;
+	color: white;
+	transform: scale(1.05);
+}
+
+.super-interactive-card:hover .button-arrow {
+	transform: translateX(5px);
+}
+
+/* Interactive Info Cards */
+.interactive-info-card {
+	background: white;
+	border-radius: 15px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	transition: all 0.3s ease;
+}
+
+.interactive-info-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.info-header {
+	background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+	padding: 1rem 1.5rem;
+	border-bottom: 1px solid #dee2e6;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.activity-pulse {
+	width: 10px;
+	height: 10px;
+	background: #ffc107;
+	border-radius: 50%;
+	animation: pulse 2s infinite;
+}
+
+.hover-highlight {
+	transition: all 0.3s ease;
+	padding: 0.75rem;
+	margin: 0 -0.75rem;
+	border-radius: 8px;
+}
+
+.hover-highlight:hover {
+	background: rgba(255, 193, 7, 0.05);
+	transform: translateX(10px);
+}
+
+.animated-dot {
+	width: 10px;
+	height: 10px;
+	background: #ffc107;
+	border-radius: 50%;
+	margin-top: 0.5rem;
+	margin-right: 1rem;
+	flex-shrink: 0;
+	animation: bounce 2s infinite;
+}
+
+.activity-status {
+	font-size: 0.7rem;
+	padding: 0.2rem 0.5rem;
+	border-radius: 10px;
+	font-weight: 600;
+}
+
+.activity-status.new {
+	background: #d4edda;
+	color: #155724;
+}
+
+.activity-status.updated {
+	background: #fff3cd;
+	color: #856404;
+}
+
+.activity-status.added {
+	background: #d1ecf1;
+	color: #0c5460;
+}
+
+.rotating-icon {
+	color: #ffc107;
+	animation: rotate 3s linear infinite;
+}
+
+.interactive-stat {
+	transition: all 0.3s ease;
+	padding: 0.75rem;
+	margin: 0 -0.75rem;
+	border-radius: 8px;
+}
+
+.interactive-stat:hover {
+	background: rgba(255, 193, 7, 0.05);
+	transform: scale(1.02);
+}
+
+.stat-bar {
+	width: 100%;
+	height: 4px;
+	background: #f1f3f4;
+	border-radius: 2px;
+	margin-top: 0.5rem;
+	overflow: hidden;
+}
+
+.stat-progress {
+	height: 100%;
+	background: linear-gradient(90deg, #ffc107, #ffad33);
+	border-radius: 2px;
+	animation: progressLoad 2s ease-out;
+}
+
+/* Animations */
+@
+keyframes slideInDown {from { opacity:0;
+	transform: translateY(-30px);
+}
+
+to {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+}
+@
+keyframes fadeIn {from { opacity:0;
+	
+}
+
+to {
+	opacity: 1;
+}
+
+}
+@
+keyframes pulse { 0%, 100% {
+	opacity: 1;
+	transform: scale(1);
+}
+
+50
+
+
+
+
+
+
+
+
+
+
+
+
+%
+{
+opacity
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+
+
+
+
+
+
+
+
+
+.7
+
+
+
+
+
+
+
+
+
+
+;
+transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+scale
+
+
+
+
+
+
+
+
+
+
+(
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+
+
+
+
+
+
+
+
+
+.1
+
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+;
+}
+}
+@
+keyframes iconPulse { 0%, 100% {
+	transform: scale(1);
+}
+
+50
+
+
+
+
+
+
+
+
+
+
+
+
+%
+{
+transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+scale
+
+
+
+
+
+
+
+
+
+
+(
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+
+
+
+
+
+
+
+
+
+.05
+
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+;
+}
+}
+@
+keyframes rotate {from { transform:rotate(0deg);
+	
+}
+
+to {
+	transform: rotate(360deg);
+}
+
+}
+@
+keyframes float { 0%, 100% {
+	transform: translateY(0px);
+	opacity: 0;
+}
+
+50
+
+
+
+
+
+
+
+
+
+
+
+
+%
+{
+transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+translateY
+
+
+
+
+
+
+
+
+
+
+(
+
+
+
+
+
+
+
+
+
+
+
+
+-20px
+
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+;
+opacity
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+
+
+
+
+
+
+
+
+
+;
+}
+}
+@
+keyframes bounce { 0%, 20%, 50%, 80%, 100% {
+	transform: translateY(0);
+}
+
+40
+
+
+
+
+
+
+
+
+
+
+
+
+%
+{
+transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+translateY
+
+
+
+
+
+
+
+
+
+
+(
+
+
+
+
+
+
+
+
+
+
+
+
+-5px
+
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+;
+}
+60
+
+
+
+
+
+
+
+
+
+
+
+
+%
+{
+transform
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+translateY
+
+
+
+
+
+
+
+
+
+
+(
+
+
+
+
+
+
+
+
+
+
+
+
+-3px
+
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+;
+}
+}
+@
+keyframes progressLoad {from { width:0;
+	
+}
+
+to {
+	width: var(--progress-width, 100%);
+}
+
+}
+
+/* Counter Animation */
+.counter, .animated-number {
+	transition: all 0.3s ease;
+}
+
+/* Custom CSS for Centering */
+.custom-card-grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center; /* Center the cards horizontally */
+	max-width: 900px;
+	/* Adjust as needed to control overall width of the 2x2 grid */
+}
+
+.custom-card-grid>.col-12 {
+	flex: 0 0 50%; /* Make each column take 50% width on larger screens */
+	max-width: 50%;
+}
+
+@media ( max-width : 768px) {
+	.animated-title {
+		font-size: 1.8rem;
+	}
+	.super-interactive-card:hover {
+		transform: translateY(-10px) scale(1.02);
+	}
+	.floating-icon {
+		width: 80px;
+		height: 80px;
+	}
+	.custom-card-grid>.col-12 {
+		flex: 0 0 100%;
+		/* Make each column take full width on smaller screens */
+		max-width: 100%;
+	}
+}
+</style>
+
+		<script>
+// Counter Animation
+function animateCounters() {
+  const counters = document.querySelectorAll('.counter, .animated-number');
+  
+  counters.forEach(counter => {
+    const target = parseInt(counter.getAttribute('data-target')) || parseFloat(counter.getAttribute('data-target'));
+    const increment = target / 100;
+    let current = 0;
+    
+    const updateCounter = () => {
+      if (current < target) {
+        current += increment;
+        counter.textContent = Math.ceil(current);
+        setTimeout(updateCounter, 20);
+      } else {
+        counter.textContent = target;
+      }
+    };
+    
+    updateCounter();
+  });
+}
+
+// Initialize animations when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  // Start counter animation after a delay
+  setTimeout(() => {
+    animateCounters();
+  }, 500);
+  
+  // Add click ripple effect
+  const cards = document.querySelectorAll('.interactive-card, .super-interactive-card');
+  cards.forEach(card => {
+    card.addEventListener('click', function(e) {
+      const ripple = document.createElement('div');
+      ripple.classList.add('ripple-effect');
+      
+      const rect = card.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      
+      card.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+});
+</script>
+
+	</section>
+
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+		<div class="container p-5 min-vh-100 ">
+			<h3 class="text-center mt-4 fw-bold">Seller Dashboard</h3>
+			<div
+				class="row row-cols-1 row-cols-md-3 g-4 justify-content-center p-5 ">
+				Add Product
+				<div class="col-md-4 ">
+					<a href="/admin/loadAddProduct" class="text-decoration-none ">
+						<div class="card shadow p-3 mb-5 border-0 text-center bg-white admin-color ">
+							<div class="card-body text-warning">
+								<i class="fa-solid fa-square-plus fa-3x mb-3"></i>
+								<h5 class="fw-semibold">Add Product</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				Add Category
+				<div class="col">
+					<a href="/admin/category" class="text-decoration-none">
+						<div class="card shadow p-3 mb-5 border-0 text-center admin-color">
+							<div class="card-body text-warning">
+								<i class="fa-solid fa-list fa-3x mb-3"></i>
+								<h5 class="fw-semibold">Add Category</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+				View Product
+				<div class="col">
+					<a href="/admin/products" class="text-decoration-none">
+						<div class="card shadow p-3 mb-5 border-0 text-center admin-color">
+							<div class="card-body text-warning">
+								<i class="fa-solid fa-book-open fa-3x mb-3"></i>
+								<h5 class="fw-semibold">View Product</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+				Orders
+				<div class="col">
+					<a href="/admin/orders" class="text-decoration-none">
+						<div class="card shadow p-3 mb-5 border-0 text-center admin-color">
+							<div class="card-body text-warning">
+								<i class="fa-solid fa-box fa-3x mb-3"></i>
+								<h5 class="fw-semibold">Orders</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+				<!-- Users
+				<div class="col">
+					<a href="#" class="text-decoration-none">
+						<div class="card shadow p-3 mb-5 border-0 text-center admin-color">
+							<div class="card-body text-warning">
+								<i class="fa-solid fa-user fa-3x mb-3"></i>
+								<h5 class="fw-semibold">Users</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+				Add Admin
+				<div class="col">
+					<a href="#" class="text-decoration-none">
+						<div class="card shadow p-3 mb-5 border-0 text-center admin-color">
+							<div class="card-body text-warning">
+								<i class="fa-solid fa-user-shield fa-3x mb-3"></i>
+								<h5 class="fw-semibold">Add Admin</h5>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+
+
+
+
+
+</body>
+</html> -->

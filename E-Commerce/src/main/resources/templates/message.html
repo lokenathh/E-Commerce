@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+
+	<section class="d-flex align-items-center min-vh-100">
+		<div
+			class="container d-flex justify-content-center align-items-center"
+			style="min-height: 80vh;">
+			<div class="row justify-content-center align-items-center w-100">
+				<div class="col-md-6 p-4 text-center">
+					<div class="success-container">
+						<!-- Success icon with animation -->
+						<div class="success-icon">
+							<div class="success-icon-circle"></div>
+							<div class="success-icon-line success-icon-line-tip"></div>
+							<div class="success-icon-line success-icon-line-long"></div>
+						</div>
+
+						<!-- Success message with reveal effect -->
+						<div class="success-content">
+							<h2 class="reveal-text">Password Reset Complete</h2>
+							<div class="alert alert-success message-box">[[${msg}]]</div>
+
+							<!-- Progress bar -->
+							<div class="progress mt-4">
+								<div id="progress-bar"
+									class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+									role="progressbar"></div>
+							</div>
+							<p class="redirect-text mt-2">
+								Redirecting in <span id="countdown">10</span>s
+							</p>
+
+							<!-- Action buttons -->
+							<div class="action-buttons mt-4">
+								<a id="login-btn" class="btn btn-success btn-lg action-button"
+									href="/signin"> <i class="fas fa-sign-in-alt"></i> Login
+									Now
+								</a>
+								<button id="stay-btn"
+									class="btn btn-outline-secondary action-button">Stay
+									Here</button>
+							</div>
+						</div>
+
+						<!-- Floating particles background -->
+						<div id="particles-js"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- <script>
+                // Countdown timer and progress bar
+                let timeRemaining = 10;
+                const countdownElement = document.getElementById('countdown');
+                const progressBar = document.getElementById('progress-bar');
+                let timerId;
+                
+                function startCountdown() {
+                    // Set initial progress
+                    progressBar.style.width = '100%';
+                    
+                    timerId = setInterval(function() {
+                        timeRemaining--;
+                        countdownElement.textContent = timeRemaining;
+                        
+                        // Update progress bar
+                        let progressPercent = (timeRemaining / 10) * 100;
+                        progressBar.style.width = progressPercent + '%';
+                        
+                        if (timeRemaining <= 0) {
+                            clearInterval(timerId);
+                            redirectToLogin();
+                        }
+                    }, 1000);
+                }
+                
+                function redirectToLogin() {
+                    // Add exit animation
+                    document.querySelector('.success-container').style.animation = 'slide-up 0.5s ease-out forwards';
+                    setTimeout(function() {
+                        window.location.href = "/login";
+                    }, 500);
+                }
+                
+                function cancelRedirect() {
+                    clearInterval(timerId);
+                    document.querySelector('.progress').style.display = 'none';
+                    document.querySelector('.redirect-text').style.display = 'none';
+                    document.getElementById('stay-btn').style.display = 'none';
+                    document.getElementById('login-btn').classList.add('btn-lg');
+                    document.getElementById('login-btn').style.width = '180px';
+                }
+                
+                // Add ripple effect to buttons
+                function createRipple(event) {
+                    const button = event.currentTarget;
+                    
+                    const circle = document.createElement('span');
+                    const diameter = Math.max(button.clientWidth, button.clientHeight);
+                    const radius = diameter / 2;
+                    
+                    circle.style.width = circle.style.height = `${diameter}px`;
+                    circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+                    circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+                    circle.classList.add('ripple');
+                    
+                    const ripple = button.getElementsByClassName('ripple')[0];
+                    if (ripple) {
+                        ripple.remove();
+                    }
+                    
+                    button.appendChild(circle);
+                }
+                
+                // Initialize
+                window.onload = function() {
+                    startCountdown();
+                    
+                    // Add event listeners for ripple effect
+                    const buttons = document.getElementsByTagName('button');
+                    for (const button of buttons) {
+                        button.addEventListener('click', createRipple);
+                    }
+                    
+                    // Initialize particles (if you add the particles.js library)
+                    if (typeof particlesJS !== 'undefined') {
+                        particlesJS('particles-js', {
+                            particles: {
+                                number: { value: 30 },
+                                color: { value: '#4CAF50' },
+                                shape: { type: 'circle' },
+                                opacity: { value: 0.5, random: true },
+                                size: { value: 5, random: true },
+                                move: { 
+                                    enable: true,
+                                    speed: 2,
+                                    direction: 'none',
+                                    random: true,
+                                    out_mode: 'out'
+                                }
+                            }
+                        });
+                    }
+                };
+            </script> -->
+
+	</section>
+
+
+
+</body>
+</html>

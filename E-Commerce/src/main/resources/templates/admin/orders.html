@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-5 p-4">
+			<div class="row">
+				<div class="col-12">
+					<!-- Title (Enhanced with better gradient) -->
+					<div class="text-center mb-5">
+						<h2 class="fw-bold display-5 position-relative d-inline-block">
+							<span class="position-relative"
+								style="background: linear-gradient(135deg, #6a11cb, #2575fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Your
+								Selling Dashboard</span>
+							<div class="position-absolute w-100"
+								style="height: 6px; background: linear-gradient(90deg, #6a11cb, #2575fc); bottom: -12px; left: 0; border-radius: 8px;"></div>
+						</h2>
+						<p class="text-muted mt-3">Track and manage all your selling
+							activities in one place</p>
+					</div>
+
+					<!-- Success Message (Enhanced) -->
+					<th:block th:if="${session.succMsg != null}">
+						<div
+							class="alert alert-success mt-2 mb-4 py-3 text-center fw-bold position-relative"
+							style="background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%); border-radius: 15px; color: #155724; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); transform: translateY(0); transition: transform 0.3s ease;">
+							<i class="bi bi-check-circle-fill me-2"
+								style="font-size: 1.5rem;"></i> [[${session.succMsg}]]
+							<button type="button"
+								class="btn-close position-absolute end-0 top-50 translate-middle-y me-3"
+								data-bs-dismiss="alert"></button>
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</div>
+					</th:block>
+
+					<!-- Error Message (Enhanced) -->
+					<th:block th:if="${session.errorMsg != null}">
+						<div
+							class="alert alert-danger mt-2 mb-4 py-3 text-center fw-bold position-relative"
+							style="background: linear-gradient(135deg, #ffd3d3 0%, #ffe8cc 100%); border-radius: 15px; color: #721c24; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); transform: translateY(0); transition: transform 0.3s ease;">
+							<i class="bi bi-exclamation-triangle-fill me-2"
+								style="font-size: 1.5rem;"></i> [[${session.errorMsg}]]
+							<button type="button"
+								class="btn-close position-absolute end-0 top-50 translate-middle-y me-3"
+								data-bs-dismiss="alert"></button>
+							<th:block th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+						</div>
+					</th:block>
+
+					<!-- Stats Row -->
+					<div class="row mb-4">
+						<div class="col-md-3 col-6 mb-3">
+							<div class="card border-0 shadow h-100"
+								style="border-radius: 15px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2);">
+								<div class="card-body text-center">
+									<i class="bi bi-bag-check-fill mb-2"
+										style="font-size: 2rem; color: #3498db;"></i>
+									<h5 class="card-title mb-0">Total Orders</h5>
+									<p class="display-6 fw-bold text-primary mb-0"
+										th:text="${#lists.size(orders)}">0</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-6 mb-3">
+							<div class="card border-0 shadow h-100"
+								style="border-radius: 15px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2);">
+								<div class="card-body text-center">
+									<i class="bi bi-truck mb-2"
+										style="font-size: 2rem; color: #2ecc71;"></i>
+									<h5 class="card-title mb-0">Processing</h5>
+									<p class="display-6 fw-bold text-success mb-0"
+										th:text="${#lists.size(orders.?[status=='Processing'])}">0</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-6 mb-3">
+							<div class="card border-0 shadow h-100"
+								style="border-radius: 15px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2);">
+								<div class="card-body text-center">
+									<i class="bi bi-check-circle-fill mb-2"
+										style="font-size: 2rem; color: #27ae60;"></i>
+									<h5 class="card-title mb-0">Delivered</h5>
+									<p class="display-6 fw-bold text-success mb-0"
+										th:text="${#lists.size(orders.?[status=='Delivered'])}">0</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 col-6 mb-3">
+							<div class="card border-0 shadow h-100"
+								style="border-radius: 15px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2);">
+								<div class="card-body text-center">
+									<i class="bi bi-x-circle-fill mb-2"
+										style="font-size: 2rem; color: #e74c3c;"></i>
+									<h5 class="card-title mb-0">Cancelled</h5>
+									<p class="display-6 fw-bold text-danger mb-0"
+										th:text="${#lists.size(orders.?[status=='Cancelled'])}">0</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Orders Table Card (Enhanced) -->
+					<div class="card border-0 shadow-lg mb-4"
+						style="border-radius: 20px; background: #ffffff; overflow: hidden; margin-left: -63px; margin-right: -63px;">
+						<div class="card-header p-4"
+							style="background: linear-gradient(45deg, #6a11cb, #2575fc); border-radius: 20px 20px 0 0;">
+							<div
+								class="d-flex justify-content-between align-items-center text-white">
+								<h5 class="fw-bold mb-0">
+									<i class="bi bi-bag-heart-fill me-2"></i> Your Selling History
+								</h5>
+								<div>
+									<a href="/admin/loadAddProduct" class="btn btn-light"
+										style="border-radius: 30px; margin-right: 10px;"> <i
+										class="bi bi-cart-plus me-2"></i>Add Products
+									</a> <a href="/products" class="btn btn-outline-light"
+										style="border-radius: 30px;"> <i class="bi bi-shop me-2"></i>Visit
+										Store
+									</a>
+								</div>
+							</div>
+						</div>
+
+
+
+
+						<div class="card-body p-0">
+							<div class="table-responsive">
+								<table class="table table-hover mb-0">
+									<thead
+										style="background: linear-gradient(to right, #f6d365 0%, #fda085 100%);">
+										<tr class="text-dark text-center">
+											<th class="ps-4">ORDER ID</th>
+											<th>DELIVERY DETAILS</th>
+											<th>ORDER PLACED</th>
+											<th>ITEMS</th>
+											<th>BILLING</th>
+											<th>STATUS</th>
+											<th class="pe-4">PROGRESS</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="o, stat:${orders}" class="align-middle "
+											th:style="${stat.odd ? 'background: #f9f9f9;' : 'background: #ffffff;'}">
+											<td class="ps-4"><strong class="d-block"
+												style="color: #4b5563;">ORDER #[[${o.orderId}]]</strong> <span
+												class="badge bg-info text-dark" style="font-size: 0.7rem;">New</span>
+											</td>
+
+											<td>
+												<div class="d-flex align-items-center">
+													<div
+														class="me-3 bg-light rounded-circle d-flex align-items-center justify-content-center"
+														style="width: 40px; height: 40px;">
+														<i class="bi bi-person-fill text-primary"></i>
+													</div>
+													<div>
+														<strong class="d-block">[[${o.orderAddress.firstName
+															+ ' ' + o.orderAddress.lastName}]]</strong> <small
+															class="text-muted"><i
+															class="bi bi-envelope-fill me-1"></i>[[${o.orderAddress.email}]]</small><br>
+														<small class="text-muted"><i
+															class="bi bi-telephone-fill me-1"></i>[[${o.orderAddress.mobileNo}]]</small><br>
+														<small class="text-muted"><i
+															class="bi bi-geo-alt-fill me-1"></i>[[${o.orderAddress.address}]],
+															[[${o.orderAddress.city}]], [[${o.orderAddress.state}]] -
+															[[${o.orderAddress.pincode}]]</small>
+													</div>
+												</div>
+											</td>
+
+											<td>
+												<div class="d-flex align-items-center">
+													<div class="bg-light rounded-circle p-2 me-2">
+														<i class="bi bi-calendar-date text-primary"></i>
+													</div>
+													<div>
+														<strong class="d-block">[[${o.orderDate}]]</strong> <small
+															class="text-muted"
+															th:text="${#temporals.format(#temporals.createNow(), 'h:mm a')}">12:30
+															PM</small>
+													</div>
+												</div>
+											</td>
+
+											<td>
+												<div class="d-flex align-items-center">
+
+													<div>
+														<div class="fw-semibold" style="color: #1f2937;">[[${o.product.title}]]</div>
+														<small class="text-muted">Item
+															#[[${o.product.id}]]</small>
+													</div>
+												</div>
+											</td>
+
+											<td>
+												<div class="card border-0 shadow-sm p-2"
+													style="border-radius: 10px; background: #f8f9fa;">
+													<span class="d-block mb-1"> <i
+														class="bi bi-box me-1 text-purple"></i>Quantity: <strong>[[${o.quantity}]]</strong>
+													</span> <span class="d-block mb-1"> <i
+														class="bi bi-tag me-1 text-info"></i>Price: <strong>₹[[${o.price}]]</strong>
+													</span> <span class="fw-bold text-success"> <i
+														class="bi bi-cash-stack me-1"></i>Total: <strong>₹[[${o.quantity
+															* o.price + 49 + 99}]]</strong>
+													</span>
+												</div>
+											</td>
+
+											<td><span
+												th:class="${o.status == 'Delivered' ? 'badge bg-success' : (o.status == 'Cancelled' ? 'badge bg-danger' : (o.status == 'Processing' ? 'badge bg-primary' : 'badge bg-warning'))}"
+												style="padding: 8px 12px; font-size: 0.9rem; border-radius: 12px;">
+													<i
+													th:class="${o.status == 'Delivered' ? 'bi bi-check-circle-fill me-1' : (o.status == 'Cancelled' ? 'bi bi-x-circle-fill me-1' : (o.status == 'Processing' ? 'bi bi-gear-fill me-1' : 'bi bi-clock-fill me-1'))}"></i>
+													[[${o.status}]]
+											</span></td>
+
+											<td class="pe-4">
+												<form action="/admin/update-order-status" method="post">
+													<div class="row g-2">
+														<div class="col">
+															<select class="form-select form-select-sm" name="st"
+																style="border-radius: 20px;">
+																<option>--select--</option>
+																<option value="1">In Progress</option>
+																<option value="2">Order Received</option>
+																<option value="3">Product Packed</option>
+																<option value="4">Out for Delivery</option>
+																<option value="5">Delivered</option>
+																<option value="6">Cancelled</option>
+															</select>
+														</div>
+														<input th:value="${o.id}" name="id" type="hidden">
+														<div class="col-auto">
+															<th:block
+																th:if="${o.status=='Cancelled' || o.status=='Delivered'}">
+																<button class="btn btn-sm btn-secondary disabled"
+																	style="border-radius: 20px;">
+																	<i class="bi bi-lock-fill me-1"></i>Update
+																</button>
+															</th:block>
+															<th:block
+																th:unless="${o.status=='Cancelled' || o.status=='Delivered'}">
+																<button class="btn btn-sm btn-primary"
+																	style="border-radius: 20px;">
+																	<i class="bi bi-arrow-repeat me-1"></i>Update
+																</button>
+															</th:block>
+														</div>
+													</div>
+												</form>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<!-- Pagination -->
+
+					</div>
+
+					<!-- Quick Reference Card -->
+					<div class="card border-0 shadow-lg"
+						style="border-radius: 20px; background: linear-gradient(135deg, #f5f7fa, #c3cfe2);">
+						<div class="card-body p-4">
+							<h5 class="card-title fw-bold mb-3">
+								<i class="bi bi-info-circle-fill me-2 text-primary"></i>Order
+								Status Reference
+							</h5>
+							<div class="row g-3">
+								<div class="col-md-2 col-6">
+									<div class="card border-0 shadow-sm h-100"
+										style="border-radius: 15px;">
+										<div class="card-body text-center p-3">
+											<div
+												class="bg-primary rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
+												style="width: 40px; height: 40px;">
+												<i class="bi bi-gear-fill text-white"></i>
+											</div>
+											<h6 class="mb-0 fw-bold">In Progress</h6>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 col-6">
+									<div class="card border-0 shadow-sm h-100"
+										style="border-radius: 15px;">
+										<div class="card-body text-center p-3">
+											<div
+												class="bg-info rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
+												style="width: 40px; height: 40px;">
+												<i class="bi bi-box-seam-fill text-white"></i>
+											</div>
+											<h6 class="mb-0 fw-bold">Order Received</h6>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 col-6">
+									<div class="card border-0 shadow-sm h-100"
+										style="border-radius: 15px;">
+										<div class="card-body text-center p-3">
+											<div
+												class="bg-warning rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
+												style="width: 40px; height: 40px;">
+												<i class="bi bi-box2-fill text-white"></i>
+											</div>
+											<h6 class="mb-0 fw-bold">Product Packed</h6>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 col-6">
+									<div class="card border-0 shadow-sm h-100"
+										style="border-radius: 15px;">
+										<div class="card-body text-center p-3">
+											<div
+												class="bg-primary rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
+												style="width: 40px; height: 40px;">
+												<i class="bi bi-truck text-white"></i>
+											</div>
+											<h6 class="mb-0 fw-bold">Out for Delivery</h6>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 col-6">
+									<div class="card border-0 shadow-sm h-100"
+										style="border-radius: 15px;">
+										<div class="card-body text-center p-3">
+											<div
+												class="bg-success rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
+												style="width: 40px; height: 40px;">
+												<i class="bi bi-check-circle-fill text-white"></i>
+											</div>
+											<h6 class="mb-0 fw-bold">Delivered</h6>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2 col-6">
+									<div class="card border-0 shadow-sm h-100"
+										style="border-radius: 15px;">
+										<div class="card-body text-center p-3">
+											<div
+												class="bg-danger rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center"
+												style="width: 40px; height: 40px;">
+												<i class="bi bi-x-circle-fill text-white"></i>
+											</div>
+											<h6 class="mb-0 fw-bold">Cancelled</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+</body>
+</html>

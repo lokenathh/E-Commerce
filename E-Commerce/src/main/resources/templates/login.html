@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+
+	<section class="d-flex align-items-center min-vh-100">
+		<div class="container">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-md-6 p-4">
+					<img alt="Login Banner" src="img/login_photo.png" class="img-fluid">
+				</div>
+				<div class="col-md-6 mt-5 p-4">
+					<div
+						class="card shadow-lg shadow p-3 mb-5 bg-body-tertiary rounded">
+						<div class="card-header bg-white">
+							<p class="fs-4 text-center m-0 fw-bold">Sign In to view your profile</p>
+
+							<div th:if="${param.error}"
+								class="alert alert-danger alert-dismissible fade show mt-3 mb-2 py-3 px-4 shadow-sm text-center fw-bold rounded-3 border-start border-4 border-danger">
+								<i class="bi bi-exclamation-triangle-fill me-2"></i>INVALID
+								EMAIL & PASSWORD
+								<button type="button" class="btn-close" data-bs-dismiss="alert"
+									aria-label="Close"></button>
+							</div>
+
+							<div th:if="${param.logout}"
+								class="alert alert-success alert-dismissible fade show mt-3 mb-2 py-3 px-4 shadow-sm text-center fw-bold rounded-3 border-start border-4 border-success">
+								<i class="bi bi-check-circle-fill me-2"></i>LOGOUT SUCCESSFULLY
+								<button type="button" class="btn-close" data-bs-dismiss="alert"
+									aria-label="Close"></button>
+							</div>
+						</div>
+						<div class="card-body">
+							<form action="/login" method="post">
+								<div class="mb-3">
+									<label class="form-label fw-bolder">Email</label> <input
+										class="form-control" name="username" type="email" required>
+								</div>
+								<div class="mb-3">
+									<label class="form-label fw-bolder">Password</label> <input
+										class="form-control" name="password" type="password" required>
+								</div>
+								<button type="submit" class="btn btn-primary w-100 ">Continue</button>
+							</form>
+						</div>
+
+						<div class="card-footer text-center">
+							<a href="/forgot-password" class="text-decoration-none">Forgot Password</a> <br>
+							<span>Don't have an account? </span> <a href="/register"
+								class="text-decoration-none">Create one</a>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+</body>
+</html>

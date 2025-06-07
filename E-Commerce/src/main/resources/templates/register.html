@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section class="d-flex align-items-center min-vh-100">
+
+		<div class="container">
+			<div class="row justify-content-center align-items-center">
+				<div class="col-md-6 p-4">
+					<img alt="Login Banner" src="img/login_photo.png" class="img-fluid">
+				</div>
+				<div class="col-md-6 mt-5 p-4">
+					<div
+						class="card shadow-lg shadow p-3 mb-5 bg-body-tertiary rounded">
+						<div class="card-header bg-white">
+							<p class="fs-4 text-center m-0">
+								<strong>Sign Up or create account</strong>
+							</p>
+
+							<th:block th:if="${session.succMsg != null}">
+								<div
+									class="alert alert-success alert-dismissible fade show mt-2 mb-0 py-2 shadow-sm"
+									style="background-color: #d4edda; border-color: #c3e6cb; text-align: center; font-weight: 500; position: relative; padding: 10px 15px; border-radius: 4px;"
+									role="alert">
+									<p class="mb-0 fw-bold" style="color: #155724;">[[${session.succMsg}]]</p>
+									<button type="button" class="btn-close" data-bs-dismiss="alert"
+										aria-label="Close"
+										style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></button>
+									<th:block
+										th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+								</div>
+							</th:block>
+
+							<th:block th:if="${session.errorMsg != null}">
+								<div
+									class="alert alert-danger alert-dismissible fade show mt-2 mb-0 py-2 shadow-sm"
+									style="background-color: #f8d7da; border-color: #f5c6cb; text-align: center; font-weight: 500; position: relative; padding: 10px 15px; border-radius: 4px;"
+									role="alert">
+									<p class="mb-0" style="color: #721c24;">[[${session.errorMsg}]]</p>
+									<button type="button" class="btn-close" data-bs-dismiss="alert"
+										aria-label="Close"
+										style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></button>
+									<th:block
+										th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+								</div>
+							</th:block>
+						</div>
+						<div class="card-body">
+							<!-- This is the fixed form section only -->
+							<form action="/saveUser" method="post" id="userRegister"
+								novalidate>
+								<div class="row">
+									<div class="col">
+										<label class="form-label"><strong>Full Name</strong></label> <input
+											class="form-control" name="name" type="text" required>
+									</div>
+									<div class="col">
+										<label class="form-label"><strong>Mobile
+												Number</strong></label> <input class="form-control" name="mobileNumber"
+											type="number" required>
+									</div>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label"><strong>Email</strong></label> <input
+										class="form-control" name="email" type="email" required>
+								</div>
+
+								<div class="mb-2">
+									<label class="form-label"><strong>Full Address</strong></label>
+									<input class="form-control" name="address" type="text" required>
+								</div>
+
+								<div class="row">
+									<div class="col">
+										<label class="form-label"><strong>City</strong></label> <input
+											class="form-control" name="city" type="text" required>
+									</div>
+
+									<div class="col">
+										<label class="form-label"><strong>State</strong></label> <input
+											class="form-control" name="state" type="text" required>
+									</div>
+								</div>
+
+								<div class="mb-3">
+									<label class="form-label"><strong>PinCode</strong></label> <input
+										class="form-control" name="pincode" type="number" required>
+								</div>
+
+								<div class="row">
+									<div class="col">
+										<label class="form-label"><strong>Password</strong></label> <input
+											class="form-control" name="password" type="password"
+											placeholder="Use Strong Password" required>
+									</div>
+									<div class="col mb-3">
+										<label class="form-label"><strong>Confirm
+												Password</strong></label> <input class="form-control" name="cpassword"
+											type="password" placeholder="Use Strong Password" required>
+									</div>
+								</div>
+
+								<button type="submit" class="btn btn-primary w-100">
+									<strong>Sign Up</strong>
+								</button>
+							</form>
+						</div>
+
+						<div class="card-footer text-center">
+
+							Have an account? <a href="/signin" class="text-decoration-none">Login</a>
+
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</section>
+
+</body>
+</html>

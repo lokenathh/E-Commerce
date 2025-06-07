@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-5 p-5">
+			<div class="row">
+				<div class="col-md-10 offset-md-1">
+					<div class="card shadow-lg border-0"
+						style="border-radius: 15px; background: linear-gradient(135deg, #f5f7fa 0%, #e4f1fe 100%);">
+						<div class="card-header bg-transparent border-0 pt-4">
+							<h2 class="fs-2 text-center fw-bold"
+								style="color: #2c3e50; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">YOUR
+								INFORMATION</h2>
+							<p class="text-center text-muted mb-4">Update your personal
+								information and security settings</p>
+							<div class="text-center mb-3 position-relative"></div>
+						</div>
+
+						<div class="card-body px-4 px-md-5">
+							<ul class="nav nav-tabs nav-fill mb-4" id="profileTabs"
+								role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active fw-bold" id="personal-tab"
+										data-bs-toggle="tab" data-bs-target="#personal" type="button"
+										role="tab" aria-controls="personal" aria-selected="true"
+										style="color: #3498db; letter-spacing: 0.5px;">
+										<i class="bi bi-person-vcard me-2"></i>Personal Details
+									</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link fw-bold" id="security-tab"
+										data-bs-toggle="tab" data-bs-target="#security" type="button"
+										role="tab" aria-controls="security" aria-selected="false"
+										style="color: #3498db; letter-spacing: 0.5px;">
+										<i class="bi bi-shield-lock me-2"></i>Security
+									</button>
+								</li>
+							</ul>
+
+							<th:block th:if="${session.succMsg != null}">
+								<div
+									class="alert alert-success alert-dismissible fade show mt-2 mb-4 py-2 shadow-sm"
+									style="background: linear-gradient(to right, #d4edda, #c8e6c9); border-left: 4px solid #2e7d32; text-align: center; font-weight: 500; position: relative; padding: 12px 15px; border-radius: 8px; animation: fadeIn 0.5s ease-in-out;"
+									role="alert">
+									<i class="bi bi-check-circle-fill me-2" style="color: #2e7d32;"></i>
+									<p class="mb-0 fw-bold d-inline" style="color: #155724;">[[${session.succMsg}]]</p>
+									<button type="button" class="btn-close" data-bs-dismiss="alert"
+										aria-label="Close"
+										style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></button>
+									<th:block
+										th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+								</div>
+							</th:block>
+
+							<th:block th:if="${session.errorMsg != null}">
+								<div
+									class="alert alert-danger alert-dismissible fade show mt-2 mb-4 py-2 shadow-sm"
+									style="background: linear-gradient(to right, #f8d7da, #ffcdd2); border-left: 4px solid #c62828; text-align: center; font-weight: 500; position: relative; padding: 12px 15px; border-radius: 8px; animation: fadeIn 0.5s ease-in-out;"
+									role="alert">
+									<i class="bi bi-exclamation-triangle-fill me-2"
+										style="color: #c62828;"></i>
+									<p class="mb-0 d-inline" style="color: #721c24;">[[${session.errorMsg}]]</p>
+									<button type="button" class="btn-close" data-bs-dismiss="alert"
+										aria-label="Close"
+										style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></button>
+									<th:block
+										th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+								</div>
+							</th:block>
+
+							<div class="tab-content" id="profileTabsContent">
+								<div class="tab-pane fade show active" id="personal"
+									role="tabpanel" aria-labelledby="personal-tab">
+									<div class="text-center">
+										<form action="/user/update-profile" method="post"
+											class="needs-validation" novalidate>
+											<!-- Hidden input for user ID -->
+											<input type="hidden" name="id" th:value="${user.id}">
+
+											<div class="row g-3">
+												<div class="col-md-6 mb-3">
+													<div class="form-floating">
+														<input type="text" name="name" id="name"
+															class="form-control border-primary border-opacity-25"
+															th:value="${user.name}" required
+															style="background-color: #f8f9fa;"> <label
+															for="name" class="text-muted"><i
+															class="bi bi-person-fill me-2"></i>Full Name</label>
+														<div class="invalid-feedback text-start">Please
+															provide your full name.</div>
+													</div>
+												</div>
+												<div class="col-md-6 mb-3">
+													<div class="form-floating">
+														<input type="text" name="mobileNumber" id="mobileNumber"
+															class="form-control border-primary border-opacity-25"
+															th:value="${user.mobileNumber}" required
+															style="background-color: #f8f9fa;"> <label
+															for="mobileNumber" class="text-muted"><i
+															class="bi bi-telephone-fill me-2"></i>Mobile Number</label>
+														<div class="invalid-feedback text-start">Please
+															provide a valid mobile number.</div>
+													</div>
+												</div>
+												<div class="col-md-12 mb-3">
+													<div class="form-floating">
+														<input type="email" name="email" id="email"
+															class="form-control bg-light" readonly
+															th:value="${user.email}"
+															style="border-left: 3px solid #3498db;"> <label
+															for="email" class="text-muted"><i
+															class="bi bi-envelope-fill me-2"></i>Email Address</label>
+													</div>
+												</div>
+												<div class="col-md-12 mb-3">
+													<div class="form-floating">
+														<input type="text" name="address" id="address"
+															class="form-control border-primary border-opacity-25"
+															th:value="${user.address}"
+															style="background-color: #f8f9fa;"> <label
+															for="address" class="text-muted"><i
+															class="bi bi-house-door-fill me-2"></i>Address</label>
+													</div>
+												</div>
+												<div class="col-md-4 mb-3">
+													<div class="form-floating">
+														<input type="text" name="city" id="city"
+															class="form-control border-primary border-opacity-25"
+															th:value="${user.city}"
+															style="background-color: #f8f9fa;"> <label
+															for="city" class="text-muted"><i
+															class="bi bi-building me-2"></i>City</label>
+													</div>
+												</div>
+												<div class="col-md-4 mb-3">
+													<div class="form-floating">
+														<input type="text" name="state" id="state"
+															class="form-control border-primary border-opacity-25"
+															th:value="${user.state}"
+															style="background-color: #f8f9fa;"> <label
+															for="state" class="text-muted"><i
+															class="bi bi-pin-map-fill me-2"></i>State</label>
+													</div>
+												</div>
+												<div class="col-md-4 mb-3">
+													<div class="form-floating">
+														<input type="text" name="pincode" id="pincode"
+															class="form-control border-primary border-opacity-25"
+															th:value="${user.pincode}"
+															style="background-color: #f8f9fa;"> <label
+															for="pincode" class="text-muted"><i
+															class="bi bi-mailbox me-2"></i>Pincode</label>
+													</div>
+												</div>
+											</div>
+											<div class="d-grid gap-2 col-6 mx-auto mt-4">
+												<button type="submit" class="btn btn-primary btn-lg fw-bold"
+													style="background: linear-gradient(135deg, #3498db, #2980b9); border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3); letter-spacing: 0.5px; padding: 12px 24px;">
+													<i class="bi bi-person-check-fill me-2"></i> Update Profile
+												</button>
+											</div>
+										</form>
+									</div>
+								</div>
+
+								<div class="tab-pane fade" id="security" role="tabpanel"
+									aria-labelledby="security-tab">
+									<div class="card border-0 shadow-sm mb-4"
+										style="border-radius: 12px; overflow: hidden;">
+										<div class="card-body p-4" style="background-color: #f8f9fa;">
+											<h4 class="card-title mb-4"
+												style="color: #2c3e50; border-bottom: 2px solid #e9ecef; padding-bottom: 10px;">
+												<i class="bi bi-key-fill me-2"></i>Change Password
+											</h4>
+											<form action="/user/change-password" method="post">
+												<div class="mb-4">
+													<div class="form-floating">
+														<input type="password" name="currentPassword" placeholder=""
+															id="currentPassword"
+															class="form-control border-primary border-opacity-25"
+															required style="background-color: #fff;" /> <label
+															for="currentPassword" class="text-muted"><i
+															class="bi bi-lock-fill me-2"></i>Current Password</label>
+														
+													</div>
+												</div>
+												<div class="mb-4">
+													<div class="form-floating">
+														<input type="password" name="newPassword" id="newPassword"
+															class="form-control border-primary border-opacity-25"
+															required style="background-color: #fff;" /> <label
+															for="newPassword" class="text-muted"><i
+															class="bi bi-key me-2"></i>New Password</label>
+														<div class="invalid-feedback text-start">Please
+															enter a new password.</div>
+													</div>
+
+												</div>
+												<div class="mb-4">
+													<div class="form-floating">
+														<input type="password" name="confirmPassword"
+															id="confirmPassword"
+															class="form-control border-primary border-opacity-25"
+															required style="background-color: #fff;" /> <label
+															for="confirmPassword" class="text-muted"><i
+															class="bi bi-lock-fill me-2"></i>Confirm Password</label>
+														<div class="invalid-feedback text-start">Please
+															confirm your new password.</div>
+													</div>
+												</div>
+												<div class="d-grid gap-2 col-6 mx-auto">
+													<button type="submit"
+														class="btn btn-success btn-lg fw-bold"
+														style="background: linear-gradient(135deg, #2ecc71, #27ae60); border: none; border-radius: 30px; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); letter-spacing: 0.5px; padding: 12px 24px;">
+														<i class="bi bi-lock-fill me-2"></i> Update Password
+													</button>
+												</div>
+											</form>
+										</div>
+									</div>
+
+									<div class="card border-0 shadow-sm"
+										style="border-radius: 12px; overflow: hidden;">
+										<div class="card-body p-4" style="background-color: #f8f9fa;">
+											<h4 class="card-title mb-4"
+												style="color: #2c3e50; border-bottom: 2px solid #e9ecef; padding-bottom: 10px;">
+												<i class="bi bi-shield-check me-2"></i>Account Security
+											</h4>
+											<div
+												class="mb-3 d-flex justify-content-between align-items-center p-3 border-bottom"
+												style="background-color: #fff; border-radius: 8px;">
+												<div>
+													<h5 class="mb-1" style="color: #2c3e50;">
+														<i class="bi bi-phone-fill me-2 text-primary"></i>Two-Factor
+														Authentication
+													</h5>
+													<p class="text-muted mb-0">Add an extra layer of
+														security to your account</p>
+												</div>
+												<div class="form-check form-switch">
+													<input class="form-check-input" type="checkbox"
+														role="switch" id="enable2FA"
+														style="width: 3em; height: 1.5em;">
+												</div>
+											</div>
+											<div
+												class="mb-3 d-flex justify-content-between align-items-center p-3"
+												style="background-color: #fff; border-radius: 8px;">
+												<div>
+													<h5 class="mb-1" style="color: #2c3e50;">
+														<i class="bi bi-bell-fill me-2 text-warning"></i>Login
+														Notifications
+													</h5>
+													<p class="text-muted mb-0">Receive alerts when someone
+														logs into your account</p>
+												</div>
+												<div class="form-check form-switch">
+													<input class="form-check-input" type="checkbox"
+														role="switch" id="enableLoginNotif"
+														style="width: 3em; height: 1.5em;" checked>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<style>
+/* Custom animations and styles */
+@
+keyframes fadeIn {from { opacity:0;
+	transform: translateY(-10px);
+}
+
+to {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+}
+@
+keyframes pulse { 0% {
+	transform: scale(1);
+}
+
+50
+
+
+%
+{
+transform
+
+
+:
+
+
+scale
+(
+
+
+1
+.05
+
+
+)
+;
+
+
+}
+100
+
+
+%
+{
+transform
+
+
+:
+
+
+scale
+(
+
+
+1
+
+
+)
+;
+
+
+}
+}
+input.form-control:focus {
+	border-color: #3498db;
+	box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+	background-color: #fff !important;
+}
+
+.form-floating label {
+	color: #7f8c8d;
+	transition: all 0.3s ease;
+}
+
+.form-floating>.form-control:focus ~label, .form-floating>.form-control:not(:placeholder-shown)
+	 ~label {
+	transform: scale(0.85) translateY(-1.5rem) translateX(0.15rem);
+	color: #3498db;
+}
+
+.tab-content {
+	animation: fadeIn 0.5s ease-in-out;
+}
+
+.nav-tabs .nav-link {
+	border: none;
+	border-bottom: 3px solid transparent;
+	transition: all 0.3s ease;
+	padding: 12px 20px;
+}
+
+.nav-tabs .nav-link.active {
+	border-bottom: 3px solid #3498db;
+	background-color: transparent;
+	transform: translateY(-2px);
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+	border-bottom: 3px solid #bdc3c7;
+	color: #2980b9;
+}
+
+.card {
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.btn {
+	transition: all 0.3s ease;
+}
+
+.btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px
+		rgba(0, 0, 0, 0.08);
+}
+
+.btn:active {
+	transform: translateY(0);
+}
+
+.form-check-input:checked {
+	background-color: #2ecc71;
+	border-color: #2ecc71;
+}
+
+.form-switch .form-check-input:focus {
+	background-image:
+		url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%232ecc71'/%3e%3c/svg%3e");
+}
+
+.avatar-circle:hover {
+	animation: pulse 1.5s infinite;
+}
+
+.invalid-feedback {
+	color: #e74c3c;
+	font-size: 0.85rem;
+}
+
+.progress {
+	border-radius: 10px;
+	background-color: #e9ecef;
+}
+
+.progress-bar {
+	transition: width 0.6s ease;
+}
+</style>
+	</section>
+</body>
+</html>

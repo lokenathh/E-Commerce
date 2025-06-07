@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+	<div class="container-fluid py-4 mt-5" style="background-color: #f5f5f7">
+		<div class="container">
+			<div class="card border-0 shadow-lg rounded-3 overflow-hidden">
+				<div class="row g-0">
+
+					<!-- Error Message -->
+					<th:block th:if="${session.errorMsg != null}">
+						<div class="alert alert-danger alert-dismissible fade show mt-2 mb-0 py-2 shadow-sm text-center fw-semibold rounded" style="background-color: #f8d7da; border-color: #f5c6cb;">
+							[[${session.errorMsg}]]
+							<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+						</div>
+					</th:block>
+
+					<!-- Left Column -->
+					<div class="col-md-4 p-4 bg-white d-flex flex-column justify-content-center">
+						<div class="position-relative mb-3">
+							<span class="position-absolute top-0 start-0 badge bg-danger rounded-pill px-3 py-2 m-2 shadow-sm">BESTSELLER</span>
+							<img th:src="@{'/img/product_img/'+${product.image}}"
+								th:alt="${product.title}"
+								class="img-fluid rounded-3 shadow-sm product-img border"
+								style="max-width: 330px; height: auto;" loading="lazy">
+						</div>
+					</div>
+
+					<!-- Right Column -->
+					<div class="col-md-7 p-4 bg-white">
+						<div class="product-header d-flex justify-content-between align-items-start mb-3">
+							<h3 class="fw-bold text-dark">[[${product.title}]]</h3>
+							<button class="btn btn-light border-0 p-0" aria-label="Add to Wishlist">
+								<i class="far fa-heart fs-4 text-secondary"></i>
+							</button>
+						</div>
+
+						<div class="ratings d-flex align-items-center gap-2 mb-3">
+							<div class="stars bg-success text-white px-2 py-1 rounded-pill small">
+								<i class="fas fa-star" aria-hidden="true"></i> <span>4.5</span>
+							</div>
+							<span class="text-muted small">(1,298 ratings)</span>
+							<span class="ms-3 text-primary small">436 answered questions</span>
+						</div>
+
+						<div class="pricing d-flex align-items-center mb-3">
+							<h2 class="fw-bold m-0">
+								<i class="fa-solid fa-indian-rupee-sign"></i>[[${product.discountPrice}]]
+							</h2>
+							<span class="fs-5 text-decoration-line-through text-muted ms-2">[[${product.price}]]</span>
+							<span class="fs-5 text-success ms-2 fw-bold">[[${product.discount}]]% off</span>
+							<span class="badge bg-warning text-dark ms-3">Limited Time Deal</span>
+						</div>
+
+						<div class="description mb-4">
+							<p class="mb-2"><span class="fw-bold">Description:</span> [[${product.description}]]</p>
+						</div>
+
+						<div class="details p-3 rounded-3 mb-4 border shadow-sm" style="background-color: #f8f9fa;">
+							<p class="mb-2 fw-bold">Product Details:</p>
+							<div class="d-flex flex-wrap mt-2">
+								<div class="me-4 mb-2 d-flex align-items-center">
+									<i class="fas fa-box text-secondary me-2" aria-hidden="true"></i>
+									Status:
+									<th:block th:if="${product.isActive}">
+										<span class="badge bg-success ms-2">In Stock</span>
+									</th:block>
+									<th:block th:unless="${product.isActive}">
+										<span class="badge bg-danger text-dark ms-2">Sold Out</span>
+									</th:block>
+								</div>
+
+								<div class="me-4 mb-2 d-flex align-items-center">
+									<i class="fas fa-book text-secondary me-2" aria-hidden="true"></i>
+									Category: [[${product.category}]]
+								</div>
+
+								<div class="me-4 mb-2 d-flex align-items-center">
+									<i class="fas fa-calendar text-secondary me-2" aria-hidden="true"></i>
+									Policy: 7 Days Replacement & Return
+								</div>
+							</div>
+						</div>
+
+						<!-- Features -->
+						<div class="features mb-4">
+							<div class="row text-center">
+								<div class="col-md-4 p-2">
+									<div class="feature-card p-3 rounded-3 shadow-sm h-100" style="background-color: #fff3e0;">
+										<i class="fas fa-money-bill-wave fa-2x text-danger mb-2" aria-hidden="true"></i>
+										<p class="m-0 fw-medium">Cash On Delivery</p>
+									</div>
+								</div>
+								<div class="col-md-4 p-2">
+									<div class="feature-card p-3 rounded-3 shadow-sm h-100" style="background-color: #e8f5e9;">
+										<i class="fas fa-undo-alt fa-2x text-danger mb-2" aria-hidden="true"></i>
+										<p class="m-0 fw-medium">Return Available</p>
+									</div>
+								</div>
+								<div class="col-md-4 p-2">
+									<div class="feature-card p-3 rounded-3 shadow-sm h-100" style="background-color: #e0f7fa;">
+										<i class="fas fa-truck-moving fa-2x text-danger mb-2" aria-hidden="true"></i>
+										<p class="m-0 fw-medium">Free Shipping</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Delivery Info -->
+						<div class="delivery-section mb-4">
+							<div class="delivery-info text-success fw-semibold">
+								<i class="fas fa-check-circle me-1" aria-hidden="true"></i>
+								Delivery by Tomorrow if ordered within 3 hrs 24 mins
+							</div>
+						</div>
+
+						<!-- Action Buttons -->
+						<div class="d-flex gap-3">
+							<th:block th:if="${product.isActive}">
+								<th:block th:if="${user==null}">
+									<a href="/signin"
+										class="btn btn-warning text-dark fw-bold flex-grow-1 py-2 rounded-pill shadow-sm">
+										<i class="fas fa-shopping-cart me-2" aria-hidden="true"></i>Add To Cart
+									</a>
+								</th:block>
+
+								<th:block th:unless="${user==null}">
+									<a th:href="@{'/addCart?pid='+${product.id}+'&uid='+${user.id}}"
+										class="btn btn-warning text-dark fw-bold flex-grow-1 py-2 rounded-pill shadow-sm">
+										<i class="fas fa-shopping-cart me-2" aria-hidden="true"></i>Add To Cart
+									</a>
+								</th:block>
+							</th:block>
+
+							<th:block th:unless="${product.isActive}">
+								<a href="#" class="btn btn-danger text-dark fw-bold flex-grow-1 py-2 rounded-pill shadow-sm disabled">
+									<i class="fas fa-shopping-cart me-2" aria-hidden="true"></i>Ooh! Sold Out
+								</a>
+							</th:block>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+</body>
+</html>

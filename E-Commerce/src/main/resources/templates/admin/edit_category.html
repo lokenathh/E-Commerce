@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+		<div class="container-fluid p-5 mt-5 min-vh-100 bg-light">
+			<div class="row">
+				<div class="col-md-6 col-lg-5 col-xl-4 mx-auto">
+					<div class="card shadow-lg border-0 rounded-4">
+						<div
+							class="card-header text-center fw-bold admin-color text-white py-3 rounded-top-4">
+							<p class="fs-4 mb-0">Edit Category</p>
+
+							<th:block th:if="${session.succMsg != null}">
+								<div
+									class="alert alert-success alert-dismissible fade show mt-2 mb-0 py-2 shadow-sm"
+									role="alert">
+									<p class="mb-0">[[${session.succMsg}]]</p>
+									<button type="button" class="btn-close" data-bs-dismiss="alert"
+										aria-label="Close"></button>
+									<th:block
+										th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+								</div>
+							</th:block>
+
+							<th:block th:if="${session.errorMsg != null}">
+								<div
+									class="alert alert-danger alert-dismissible fade show mt-2 mb-0 py-2 shadow-sm"
+									role="alert">
+									<p class="mb-0">[[${session.errorMsg}]]</p>
+									<button type="button" class="btn-close" data-bs-dismiss="alert"
+										aria-label="Close"></button>
+									<th:block
+										th:text="${@commonServiceImpl.removeSessionMessage()}"></th:block>
+								</div>
+							</th:block>
+						</div>
+
+						<div class="card-body p-4">
+							<form action="/admin/updateCategory" method="post"
+								enctype="multipart/form-data" class="needs-validation"
+								novalidate>
+
+								<input type="hidden" name="id" th:value="${category.id}">
+								<div class="mb-4">
+									<label for="category" class="form-label fw-semibold">Enter
+										Category</label> <input type="text" id="category" name="name"
+										th:value="${category.name}"
+										class="form-control border-primary-subtle shadow-sm" required>
+									<div class="invalid-feedback">Please enter a category
+										name.</div>
+								</div>
+
+								<div class="mb-4">
+									<label class="form-label fw-semibold d-block">Status</label>
+									<!-- [[${category.isActive}]] -->
+
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="isActive"
+											value="true" th:checked="${category.isActive==true}"
+											id="flexRadioDefault1"> <label
+											class="form-check-label" for="flexRadioDefault1">Active</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="isActive"
+											value="false" th:checked="${category.isActive==false}"
+											id="flexRadioDefault2"> <label
+											class="form-check-label" for="flexRadioDefault2">Inactive</label>
+									</div>
+								</div>
+
+								<div class="mb-4">
+									<label for="categoryImage" class="form-label fw-semibold">Upload
+										Image</label> <input type="file" id="categoryImage" name="file"
+										class="form-control border-primary-subtle shadow-sm"
+										accept="image/*" onchange="previewImage(this)">
+									<div class="invalid-feedback">Please upload a category
+										image.</div>
+									<small class="text-muted mt-1 d-block">Only image files
+										are allowed (.jpg)</small>
+								</div>
+                                
+                                <!-- Image preview container -->
+                                <div class="mb-4 text-center">
+                                    <p class="fw-semibold mb-2">Image Preview:</p>
+                                    <div id="imagePreviewContainer">
+                                        <!-- Current image displayed here -->
+                                        <img id="imagePreview" th:src="@{'/img/category_img/'+${category.imageName}}"
+                                            style="max-width: 100%; max-height: 200px; object-fit: contain;" 
+                                            class="border p-1 rounded shadow-sm">
+                                    </div>
+                                </div>
+
+								<button type="submit"
+									class="btn text-white fw-bold w-100 py-2 admin-color rounded-pill shadow-sm">
+									<i class="bi bi-save me-2"></i>Update Category
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+        <!-- Add JavaScript for image preview -->
+        <script>
+            function previewImage(input) {
+                var imagePreview = document.getElementById('imagePreview');
+                
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                    };
+                    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+
+	</section>
+
+</body>
+</html>
